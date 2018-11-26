@@ -11,7 +11,6 @@ A new fast method for building multiple consensus trees using *k*-means
 	=> Calinski-Harabasz and W criterion for cluster validity indices adapted for tree clustering.
 	=> The non-squared of Robinson and Foulds topological distance can be used.
 	=> The recommended option: Calinski-Harabasz + non-squared Robinson and Foulds distance.
-  => The criterion of alpha can be change (i.e. between 0 and 1)
 	 =============================================================================================================
 
 # Installation
