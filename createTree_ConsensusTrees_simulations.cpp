@@ -24,7 +24,7 @@
 
 using namespace std;
 
-struct TNode{	
+struct TNode{
     int NoNoeud;
 	char *seq;
 	TNode * gauche;
@@ -38,7 +38,7 @@ int ExtraireDonneesLC(const char * chaine, char *champs, char * contenu);
 void validation(int &intParam);
 void validationAlpha(double &alpha);
 void validationKmin(int intParam, int &kmin);
- 
+
  void presenterProgramme(){
 	printf ("Generate Tree similar\n");
 	printf("Nadia Tahiri and Vladimir Makarenkov - Departement d'informatique - Universite du Quebec a Montreal\n");
@@ -60,12 +60,12 @@ int main(int nargs,char ** argv){
 	int n;
 	char champs[100];
 	char contenu[100];
-		
+
 	if(nargs < 2){
 		printf("\nbad input..\nusage:%s {-simulation|-matrice|-tree}\n",argv[0]);
 		exit(1);
-	}		
-	
+	}
+
 	if(ExtraireDonneesLC(argv[1],champs,contenu)==1){
 		if(strcmp("tree",champs) == 0){
 			// int const default_argc = 11;
@@ -102,16 +102,16 @@ int main(int nargs,char ** argv){
 				if(nargs != 11){
 					printf("\nbad input..\nusage:%s -tree nameFile [-p Parametre] [-alpha alphaValue] [-kmin kminValue] [-kmax kmaxValue]\n",argv[0]);
 					exit(1);
-				}	
+				}
 			}
-			
+
 			vector <string> mesTrees;
 			int ligne = 1;
 			char ** cl2 = new char*[4];
 			for (int i=0;i<4;i++){
 				cl2[i] = new char[10];
 			}
-					
+
 			strcpy(cl2[0], "*");
 			strcpy(cl2[1], "?");
 			strcpy(cl2[2], "?");
@@ -124,36 +124,37 @@ int main(int nargs,char ** argv){
 					mesTrees.push_back("");//creation d'une ligne vide
 					getline(fichier, mesTrees.back());//lecture d'une ligne du fichier
 					ligne = mesTrees.size() - 1;//je recupere la taille du tableau (-1 pour la ligne 0)
-					
+
 					if(mesTrees[ligne].empty())//si la ligne est vide
 						mesTrees.pop_back();//on la retire du tableau
-				} 
+				}
 				tabIndices.push_back(mesTrees.size());
 				if (kmax>mesTrees.size()-1||kmax<1){
 					kmax=mesTrees.size()-1;
 				}
 				main_consense(cl2,tabIndices,mesTrees,intParam,alpha,kmin,kmax);
-				
+
 				//vider les vecteurs
 				mesTrees.clear();
 				tabIndices.clear();
 			}
 		}else if(strcmp("matrice",champs) == 0){
-			if(nargs != 5){
-				printf("\nbad input..\nusage:%s {-matrice} nameFile {-p} Parametre [-kmin kminValue] [-kmax kmaxValue]\n",argv[0]);
+			if(nargs != 11){
+				printf("\nbad input..\nusage:%s {-matrice} nameFile {-p} Parametre [-alpha alphaValue] [-kmin kminValue] [-kmax kmaxValue]\n",argv[0]);
 				exit(1);
-			}	
+			}
 			fstream fichier(argv[2]);
 			int intParam = atoi(argv[4]);
-			int kmin = atoi(argv[6]);
-			int kmax = atoi(argv[8]);
+			int alpha = atof(argv[6]);
+			int kmin = atoi(argv[8]);
+			int kmax = atoi(argv[10]);
 			validation(intParam);
 			vector <string> mesTrees;
 			char ** cl2 = new char*[4];
 			for (int i=0;i<4;i++){
 				cl2[i] = new char[10];
 			}
-						
+
 			//Varriables
 			double **Matrice_RF;
 			double **Ww;
@@ -161,8 +162,8 @@ int main(int nargs,char ** argv){
 			double *distances = new double[4];
 			int n = 0; //taille de la matrice RF
 			string contenu = "";
-			
-			
+
+
 			strcpy(cl2[0], "*");
 			strcpy(cl2[1], "?");
 			strcpy(cl2[2], "?");
@@ -174,29 +175,29 @@ int main(int nargs,char ** argv){
 			string val = "";
 			int ligne = 0;
 			int colonne = 0;
-			
+
 			if( !fichier ){
 				cout << "File "<<argv[2]<<" no exist."<<endl;
 			}else{
-	
+
 				//lecture de la premiere ligne (taille de la matrice)
 				getline(fichier, contenu);//lecture d'une ligne du fichier
-				
-				val = contenu.substr(0, contenu.find(delimiter)); 
+
+				val = contenu.substr(0, contenu.find(delimiter));
 				istringstream(val) >> n;
-				
+
 				Matrice_RF= new double*[n];
 				Ww= new double*[n];
 				n_identique= new double*[n];
-				
+
 				for(int lineDist=0;lineDist<n;lineDist++){
 					Matrice_RF[lineDist]= new double[n];
 					Ww[lineDist]= new double[n];
 					n_identique[lineDist]= new double[n];
 					mesTrees.push_back("");//creation d'une ligne vide
 				}
-				
-				
+
+
 				//Initialisation des matrices : Matrice_RF, Ww et n_identique
 				for (int i=0; i<n; i++)
 				{
@@ -207,32 +208,32 @@ int main(int nargs,char ** argv){
 						n_identique[i][j]=n;
 					}
 				}
-				
+
 				while( !fichier.eof()){
 					getline(fichier, contenu);//lecture d'une ligne du fichier
 					colonne = 0;
 					while ((pos = contenu.find(space))!= std::string::npos) {
 						val = contenu.substr(0, pos);
 						istringstream(val) >> Matrice_RF[ligne][colonne];
-						
+
 						contenu.erase(0, pos + space.length());
 						colonne++;
 					}
 					ligne++;
-					
-				} 
+
+				}
 				tabIndices.push_back(n);
-				
+
 				int *n_leaves = new int[mesTrees.size()+1];
 				//appel de l'algorithme de K-means:
-				if(mesTrees.size()>3){	
+				if(mesTrees.size()>3){
 					main_kmeans(cl2,mesTrees,Matrice_RF,n_identique,Ww,tabIndices,intParam, n_leaves,kmin,kmax);
-				}	
-				
+				}
+
 				//vider les vectors
 				mesTrees.clear();
 				tabIndices.clear();
-				
+
 				//Liberation of memory
 				for (int i=0;i<n;i++){
 					delete [] Matrice_RF[i];
@@ -246,10 +247,10 @@ int main(int nargs,char ** argv){
 				for (int i=0;i<4;i++){
 					delete [] cl2[i];
 				}
-				delete [] cl2; 
+				delete [] cl2;
 			}
 		}
-		
+
 	}
 	printf("END OF PROGRAM!\n");
 	return 0;
@@ -280,23 +281,23 @@ void validation(int &intParam){
 	while(intParam<0 || intParam>2){
 		cout<<"Invalid Parameter. Help (CH using by default). Help"<<endl;
 		cout<<"Parameter1: CH "<<endl;
-		cout<<"Parameter 2: W "<<endl;		
-		cout<<"Parameter 0: Exit "<<endl;	
+		cout<<"Parameter 2: W "<<endl;
+		cout<<"Parameter 0: Exit "<<endl;
 		intParam=1;
 	}
-	
+
 	if(intParam==0){
 		cout<<"Invalid Parameter. Help (CH using by default). Help"<<endl;
-		cout<<"Parameter1: CH "<<endl;
-		cout<<"Parameter 2: W "<<endl;		
-		cout<<"Parameter 0: Exit "<<endl;	
+		cout<<"Parameter1: CH (Calinski-Harabasz) "<<endl;
+		cout<<"Parameter 2:BH (Ball-Hall)"<<endl;		
+		cout<<"Parameter 0: Exit "<<endl;
 		cout<<"====END OF PROGRAM!===="<<endl;
 		exit(0);
 	}
 }
 
 void validationAlpha(double &alpha){
-	if(alpha<0 || alpha>1){	
+	if(alpha<0 || alpha>1){
 		alpha=1;
 	}
 }

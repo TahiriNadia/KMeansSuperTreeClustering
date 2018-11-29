@@ -356,7 +356,7 @@ int main_kmeans(char **argv,vector <string> monTableau, double ** mat, double **
 
 	// Compute vector 'mean' of overall means
 	for (j=1;j<=p;j++){
-		mean[j]=0;  
+		mean[j]=0;
 	}
 
 	for (i=1;i<=n;i++){
@@ -472,7 +472,7 @@ int main_kmeans(char **argv,vector <string> monTableau, double ** mat, double **
 
 				if(intParam==1){
 					CH_new = DistanceCH(n,kmax,mat,list,Ww,FO_new,facteur);
-					if(CH_new>=CHr[kk]){
+					if(CH_new>CHr[kk]){
 						SSEr[kk]=SSE;		//SSEr(kk)=SSE
 						nobest[kk]=iran;	//nobest(kk)=iran
 
@@ -489,12 +489,12 @@ int main_kmeans(char **argv,vector <string> monTableau, double ** mat, double **
 					}
 				}else if(intParam==2){
 					W_new = DistanceW(n,kmax,mat,list,Ww,FO_new,facteur);
-					
-					if(W_new<=Wr[kk]){
+
+					if(W_new<Wr[kk]){
 						SSEr[kk]=SSE;		//SSEr(kk)=SSE
 						nobest[kk]=iran;	//nobest(kk)=iran
 						nnitr[kk]=nnit;	//nnitr(kk)=nnit
-						
+
 						W=W_new;
 						Wr[kk]=W;
 
@@ -527,7 +527,7 @@ m60:
 			D1=0.0;		//D1=0.0
 			i1ref=1;		//i1ref=igr1
 			i2ref=kk;		//i2ref=igr2
-			  
+
 			//Group "i2ref" disappears
 			for (i=1;i<=n;i++){
 				if(list[i]==i2ref){
@@ -625,7 +625,7 @@ m60:
 
 
 	}  //fin random start
-	
+
 	// Print results
 	switch (intParam){
 		case 1:
@@ -634,10 +634,10 @@ m60:
 			conv2sameRef(Strouve,Sref,N);
 			outStat(Strouve,Sref,criteria,N,N_especes,percent,K_real,CHr_group,CHr_max,listr,CHr,k1,k2);
 		}break;
-		
+
 		case 2:
 		{
-			strcpy(criteria, "W");
+			strcpy(criteria, "BH");
 			conv2sameRef(Strouve,Sref,N);
 			outStat(Strouve,Sref,criteria,N,N_especes,percent,K_real,W_group,W_max,listr,Wr,k1,k2);
 		}break;
@@ -787,7 +787,7 @@ void outStat(int Strouve[],int Sref[],char *criteria,int N,char *N_especes,char 
 	for(int i=k2; i<=k1; i++){
 		cout<<"K = "<<i<<" "<<criteria<<" = "<<allScore[i]<<" : ";
 		for(int j=1; j<=N; j++){
-			cout<<listr[i][j-1]<<" <> ";
+			cout<<listr[i][j]<<" <> ";
 		}
 		cout<<endl;
 	}
@@ -843,7 +843,7 @@ void conv2sameRef(int *Strouve,int *Sref, int n)
 		// cout<<Sref[i]<<" <> ";
 	// }
 	// cout<<endl;
-	
+
 	//To know the number of cluster
 	for(int i=0; i<n; i++){
 		if(Strouve[i]>k){
@@ -970,7 +970,7 @@ void Assign(int &iran,int &n,int &nmax,int &k1,int &kmax,int* list,int* howmany,
 	int k=0, i=0, ii=0, itemp=0, kk=0, how=0, isum=0;
 	char namea[255];
 	double turn=0;
-	
+
 	if ((iassign==1) || (iassign==2)){
 		how=n/(k1*1.0);
 		for (k=1;k<=(k1-1);k++) {howmany[k]=how;}
@@ -1144,7 +1144,7 @@ double FO_super_tree(int &n,int &kmax,double** mat,double* Dvec,int* list,int* h
 					//Pour le cluster source
 					k_source = list[i];
 					nb_cluster_source = nk_CH[k_source];
-					
+
 					tmp_calc_source = clusterK_same[k_source];
 					nb_cluster_source -=1;
 					if (nb_cluster_source==1){
@@ -1156,7 +1156,7 @@ double FO_super_tree(int &n,int &kmax,double** mat,double* Dvec,int* list,int* h
 							}
 						}
 					}
-					
+
 					nb_cluster_dest = nk_CH[k];
 
 					if((nk_CH[k]>1) && (nk_CH[list[i]]>1)){
@@ -1172,7 +1172,7 @@ double FO_super_tree(int &n,int &kmax,double** mat,double* Dvec,int* list,int* h
 					else{
 						FO_new = FO_old;
 					}
-					
+
 					//compute Function objective
 					//Pour le cluster de destination
 					tmp_calc_dest = clusterK_same[k];
@@ -1190,7 +1190,7 @@ double FO_super_tree(int &n,int &kmax,double** mat,double* Dvec,int* list,int* h
 					if(nb_cluster_source>=1){
 						FO_new = FO_new + (tmp_calc_source/(1.0*nb_cluster_source));
 					}
-					
+
 					if(FO_new<FO_old){
 						Dref=FO_new;
 						kref=k;
@@ -1217,7 +1217,7 @@ double FO_super_tree(int &n,int &kmax,double** mat,double* Dvec,int* list,int* h
 						//A VOIR SI UTILE
 						new_k = k;
 						old_k = list[i];
-						
+
 					}else{
 						Dref=FO_old;
 					}
@@ -1302,7 +1302,7 @@ double FO_W(int &n,int &kmax,double** mat,double* Dvec,int* list,int* howmany,do
 						//Pour le cluster source
 						k_source = list[i];
 						nb_cluster_source = nk_W[k_source];
-						
+
 						tmp_calc_source = clusterK_same[k_source];
 						nb_cluster_source -=1;
 						if (nb_cluster_source==1){
@@ -1314,7 +1314,7 @@ double FO_W(int &n,int &kmax,double** mat,double* Dvec,int* list,int* howmany,do
 								}
 							}
 						}
-						
+
 						nb_cluster_dest = nk_W[k];
 
 						if((nk_W[k]>1) && (nk_W[list[i]]>1)){
@@ -1345,7 +1345,7 @@ double FO_W(int &n,int &kmax,double** mat,double* Dvec,int* list,int* howmany,do
 						if(nb_cluster_source>=1){
 							FO_new = FO_new + (2.0*tmp_calc_source/(1.0*nb_cluster_source*(nb_cluster_source-1)));
 						}
-						
+
 						if(FO_new<FO_old){
 							Dref=FO_new;
 							kref=k;
@@ -1438,7 +1438,7 @@ double DistanceCH(int &n,int &kmax,double** mat,int* list,double** Ww,double FO_
  	if((fabs(SSW)>0.000001) && (k_cluster>1)){
 		distance_total=(SSB/(1.0*SSW))*((1.0*n-k_cluster)/((1.0*k_cluster)-1.0));
 	}
-	
+
 	if(fabs(SSW)<=0.000001  && (k_cluster>1)){
 		distance_total=10000000.0*SSB*((n-k_cluster)/((1.0*k_cluster)-1.0));
 	}
@@ -1478,7 +1478,8 @@ double DistanceW(int &n,int &kmax,double** mat, int* list, double** Ww, double F
 	}
 
  	if(k_cluster!=n){
-		distance_total=(FO_new/(1.0*(n-k_cluster)));
+		// distance_total=(FO_new/(1.0*(n-k_cluster)));
+		distance_total=(FO_new/k_cluster);
 	}
 
 	delete [] clusterK_same;
