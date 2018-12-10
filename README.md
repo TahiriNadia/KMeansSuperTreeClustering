@@ -1,20 +1,22 @@
-# CKMeansTreeClustering
+# CKMeansSuperTreeClustering
 A new fast method for building multiple consensus trees using *k*-means
 
 # About
 	=> =============================================================================================================
-	=> Program   : KMeansTreeClustering - 2018 (supe
-	=> Authors   : Nadia Tahiri and Vladimir Makarenkov (Universite du Quebec a Montreal)
-	=> This program computes a clustering of phylogenetic trees based on the *k*-means partitioning algorithm.
-	=> The set of trees in the Newick format should be provided as input.
-	=> The optimal partitioning in K classes is returned as output. The number of classes can be determined by the
-	=> Calinski-Harabasz and W criterion for cluster validity indices adapted for tree clustering.
-	=> The non-squared of Robinson and Foulds topological distance can be used.
-	=> The recommended option: Calinski-Harabasz + non-squared Robinson and Foulds distance.
+	=> Program   : KMeansSuperTreeClustering - 2018
+	=> Authors   : Nadia Tahiri and Vladimir Makarenkov (Université du Québec a Montréal)
+	=> This program clusters phylogenetic trees based using the k-means partitioning algorithm.
+	=> These trees may have the same or different, but mutually overlapping, sets of leaves.
+	=> Phylogenetic trees must be given in the Newick format (program input).
+	=> A partitioning of the input trees in K clusters of trees is returned as output. 
+	=> The optimal number of classes can be determined either by the Calinski-Harabasz or by the Ball-Hall cluster validity
+	=> index adapted for tree clustering.
+	=> The Robinson and Foulds topological distance is used in the objective function of K-means.
+	=> The list of the program parameters is specified below.
 	 =============================================================================================================
 
 # Installation
-	$ git clone https://github.com/TahiriNadia/CKMeansTreeClustering.git
+	$ git clone https://github.com/TahiriNadia/KMeansSuperTreeClustering.git
 	$ make
 	or
 	$ make install
