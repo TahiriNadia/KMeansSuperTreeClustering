@@ -1,23 +1,17 @@
-// K-means clustering using the SAS Fastclust algorithm,
-// described on p. 352 of Numerical Ecology (1998).
-//
-// // hoice of transformations for species abundance data,
-// from Legendre and Gallagher (submitted).
-//
-// Loop with different random starting configurations.
-//
-// References:
-//
-// Legendre, P. and E. Gallagher. 2001. Ecologically meaningful transformations
-// for ordination of species data. Oecologia (in press).
-//
-//  Legendre, P. and L. Legendre, 1998. Numerical Ecology. 2nd English edition.
-//  Elsevier Science BV, Amsterdam.
-//
-//  Milligan, G. W. and M. C. Cooper. 1988. A study of standardization of
-//  variables in cluster analysis. Journal of Classification 5: 181-204.
-//
-//                                           Pierre Legendre, August 1999
+
+// =============================================================================================================
+// Program   : KMeansSuperTreeClustering - 2018
+// Authors   : Nadia Tahiri and Vladimir Makarenkov (Université du Québec a Montréal)
+// This program clusters phylogenetic trees using the k-means partitioning algorithm.
+// These trees may have the same or different, but mutually overlapping, sets of leaves (the multiple supertree problem).
+// Phylogenetic trees must be given in the Newick format (program input).
+// A partitioning of the input trees in K clusters of trees is returned as output. 
+// The optimal number of clusters can be determined either by the Calinski-Harabasz (CH) or by the Ball-Hall (BH) cluster 
+// validity index adapted for tree clustering.
+// A supertree can then be inferred for each cluster of trees.
+// The Robinson and Foulds topological distance is used in the objective function of K-means.
+// The list of the program parameters is specified in the file README.md
+ =============================================================================================================
 //
 //  345678901234567890123456789012345678901234567890123456789012345678901234567890
 #include <stdio.h>
