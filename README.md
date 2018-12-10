@@ -32,14 +32,14 @@ A new fast method for building multiple consensus trees using *k*-means
 	Please execute the following command line:
 	=> For trees: ./KMTC -tree input_file cluster_validity_index alpha Kmin Kmax
 
-  => 	input_file: the input file for the program
-  => 	cluster_validity_index: the cluster validity index used in K-means (1 for Calinski-Harabasz and 2 for Ball-Hall)
-  =>    alpha: is the penalty parameter for species overlap in phylogenetic trees (must be between 0 and 1)
-  =>    Kmin: is the minimum number of clusters in K-means. 
-        - For CH, Kmin>=2,
-        - For BH, Kmin>=1.
-  =>    Kmax: the maximum number of clusters in K-means. 
-        - Kmax must be less or equal to N-1 (where N is the number of trees).
+	=> input_file: the input file for the program
+	=> cluster_validity_index: the cluster validity index used in K-means (1 for Calinski-Harabasz and 2 for Ball-Hall)
+	=> alpha: is the penalty parameter for species overlap in phylogenetic trees (must be between 0 and 1)
+	=> Kmin: is the minimum number of clusters in K-means. 
+        	- For CH, Kmin>=2,
+        	- For BH, Kmin>=1.
+	=> Kmax: the maximum number of clusters in K-means. 
+        	- Kmax must be less or equal to N-1 (where N is the number of input trees).
 
 	Command line execution:
 	./KMTC -tree data/all_trees_woese.txt 1 1 2 10
