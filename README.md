@@ -3,7 +3,7 @@ A new fast method for building multiple consensus trees using *k*-means
 
 # About
 	=> =============================================================================================================
-	=> Program   : KMeansTreeClustering - 2018
+	=> Program   : KMeansTreeClustering - 2018 (supe
 	=> Authors   : Nadia Tahiri and Vladimir Makarenkov (Universite du Quebec a Montreal)
 	=> This program computes a clustering of phylogenetic trees based on the *k*-means partitioning algorithm.
 	=> The set of trees in the Newick format should be provided as input.
