@@ -4,8 +4,8 @@
 //=  Date of modification : March 2014
 //=  Authors : Nadia Tahiri, Alix Boc and Vladimir Makarenkov
 //=  Date : November 2009
-//=  
-//=  Description : This program detect horizontal gene transfer (HGT). As input it takes 2 
+//=
+//=  Description : This program detect horizontal gene transfer (HGT). As input it takes 2
 //=  trees: a species tree and a gene tree. the goal is to transform the species tree
 //=  into the gene tree following a transfer scenario. There are 3 criteria : the robinson and
 //=  Foulds distance, the least-square criterion and the bipartition distance. We also use the
@@ -35,7 +35,7 @@ using namespace std;
 #include "utils_tree.cpp"
 #include "fonctions.cpp"
 
-#define binaireSpecies 0 
+#define binaireSpecies 0
 #define binaireGene    1
 int compteur=0;
 
@@ -72,7 +72,7 @@ void main_hgt(string tree1, string tree2, double *distances){
 	}
 
 	rand_bootstrap = param.rand_bootstrap;
-	
+
 	if(strcmp(param.speciesroot,"file") == 0){
 		if(!file_exists(param.speciesRootfileLeaves) && !file_exists(param.speciesRootfile)){
 			printf("\nhgt : The file %s does not exist",param.speciesRootfileLeaves);
@@ -85,14 +85,14 @@ void main_hgt(string tree1, string tree2, double *distances){
 			exit(-1);
 		}
 	}
-	
+
 //==============================================================================
 //============================= LECTURE DES ARBRES =============================
 //==============================================================================
 	initInputTree(&SpeciesTree);
 	initInputTree(&GeneTree);
 	nb_same_espece = readInputFile(tree1,tree2, param.input,&SpeciesTree,&GeneTree,param.errorFile);
-	
+
 	if(nb_same_espece<0) {
 		nb_same_espece=0;
 	}
@@ -104,7 +104,7 @@ void main_hgt(string tree1, string tree2, double *distances){
 	if(readInput(GENE,param.input,&GeneTreeReduce) == -1){ printf("\nError in gene tree\n"); getchar(); exit(-1);}
 
 	TrierMatrices(GeneTreeReduce.Input,GeneTreeReduce.SpeciesName,SpeciesTreeReduce.SpeciesName,SpeciesTreeReduce.size);
-	
+
 	NJ(SpeciesTreeReduce.Input,SpeciesTreeReduce.ADD,SpeciesTreeReduce.size);
 	NJ(GeneTreeReduce.Input,GeneTreeReduce.ADD,GeneTreeReduce.size);
 
@@ -122,22 +122,24 @@ void main_hgt(string tree1, string tree2, double *distances){
 	}
 	min_diff = fabs(min_diff);
 	min_diff = min_diff * min_diff;
-	
+
 	nb_leaves = SpeciesTree.size;
-	distances[0] = floor(distances[0]*pow(10,3)+0.5)/(1.0*pow(10,3)); 
-	
+	distances[0] = floor(distances[0]*pow(10,3)+0.5)/(1.0*pow(10,3));
+
 	if(nb_same_espece<=3){
-		distances[0]=1.0+alpha*((min(SpeciesTree.size,GeneTree.size)-(1.0*nb_same_espece))/(1.0*min(SpeciesTree.size,GeneTree.size)));
+		distances[0]=-((alpha+0.000001)*((min(SpeciesTree.size,GeneTree.size)-(1.0*nb_same_espece))/(1.0*min(SpeciesTree.size,GeneTree.size))));
+		//distances[0]=0;
+		// distances[0]=1.0+((alpha)*((min(SpeciesTree.size,GeneTree.size)-(1.0*nb_same_espece))/(1.0*min(SpeciesTree.size,GeneTree.size))));
 	}else{
 		distances[0]=distances[0]/((2.0*nb_same_espece)-6.0)+alpha*((min(SpeciesTree.size,GeneTree.size)-(1.0*nb_same_espece))/(1.0*min(SpeciesTree.size,GeneTree.size))); //normalisation par le nombre d'espèces communes entre les deux arbres
 	}
-	
+
 	distances[1]=aCrit.LS;
 	distances[2]=aCrit.BD;
-	distances[3]=nb_same_espece;	
-	
+	distances[3]=nb_same_espece;
+
 	distances[4]=nb_leaves;
-		
+
 	FreeCriteria(&aCrit,SpeciesTreeReduce.size);
 	freeInputTree(&SpeciesTree,SpeciesTree.size);
 	freeInputTree(&GeneTree,GeneTree.size);

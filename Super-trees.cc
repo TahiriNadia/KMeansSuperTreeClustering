@@ -83,13 +83,13 @@ int main_consense(char **argv,vector<int> tabIndices, vector <string> mesTrees,i
 			main_hgt(tree1,tree2,distances);
 			Matrice_RF[line][column]=distances[0];
 			
-			if(Matrice_RF[line][column]<=0.0){
+			/*if(Matrice_RF[line][column]<=0.0){
 				Matrice_RF[line][column]=0.0;
 			}
 			
 			if(isnan(Matrice_RF[line][column])){
 				Matrice_RF[line][column]=0.0;
-			}
+			}*/
 
 			//Recuperer le nombre d'espèces communes
 			n_identique[line][column]=distances[3];
@@ -102,6 +102,35 @@ int main_consense(char **argv,vector<int> tabIndices, vector <string> mesTrees,i
 
 		}
 	}
+	
+	double avg_RF = 0.0;
+	int nb_avg_RF = 0;
+	// RF = Mean(RF) + Alpha*Terme2, where Mean(RF) is the average of all RF between trees (where number of same leave is more than 3)
+	for(int line=0;line<mesTrees.size()-1;line++){
+		for(int colonne=(line+1);colonne<mesTrees.size();colonne++){
+			if(Matrice_RF[line][colonne]>=0){
+				avg_RF += Matrice_RF[line][colonne];
+				nb_avg_RF += 1;
+			}
+		}
+	}
+	
+	/*cout<<nb_avg_RF<<endl;
+	cout<<avg_RF<<endl;
+	avg_RF = avg_RF/(nb_avg_RF*1.0);
+	cout<<avg_RF<<endl;*/
+	
+	avg_RF = avg_RF/(nb_avg_RF*1.0);
+	// RF = Mean(RF) + Alpha*Terme2, where Mean(RF) is the average of all RF between trees (where number of same leave is more than 3)
+	for(int line=0;line<mesTrees.size()-1;line++){
+		for(int colonne=(line+1);colonne<mesTrees.size();colonne++){
+			if(Matrice_RF[line][colonne]<0){
+				Matrice_RF[line][colonne] = avg_RF + abs(Matrice_RF[line][colonne]);
+				Matrice_RF[colonne][line] = Matrice_RF[line][colonne];
+			}
+		}
+	}
+	
 	
 	//creation de la matrice de distances RF : mat
 	for (int i=0; i<mesTrees.size(); i++){
