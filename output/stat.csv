@@ -1,1 +1,2 @@
 criteria;NbTrees;NbEspeces;percent;Kreal;Ktrouve;|Ktrouve-Kreal|;|Ktrouve-Kreal|/max(Ktrouve,Kreal));T;RI;ARI;Score;Partition trouve;Partition Ref;Time;
+CH;36;?;?;?;2;2;1.000;0;0.487;0.000;7.934;part(1 <> 2 <> 2 <> 1 <> 2 <> 2 <> 1 <> 1 <> 1 <> 1 <> 1 <> 2 <> 2 <> 1 <> 2 <> 2 <> 1 <> 2 <> 1 <> 1 <> 2 <> 1 <> 2 <> 2 <> 1 <> 1 <> 1 <> 1 <> 2 <> 2 <> 1 <> 2 <> 1 <> 1 <> 2 <> 2 );8.000;
