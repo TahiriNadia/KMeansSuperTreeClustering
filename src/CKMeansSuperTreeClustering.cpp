@@ -68,8 +68,6 @@ int main(int nargs,char ** argv){
 
 	if(ExtraireDonneesLC(argv[1],champs,contenu)==1){
 		if(strcmp("tree",champs) == 0){
-			// int const default_argc = 11;
-			// char* const default_args[] = { "-p", "1","-alpha","1","-kmin","2","-kmax","10"};
 			fstream fichier(argv[2]);
 			int intParam;
 			double alpha;
@@ -79,28 +77,35 @@ int main(int nargs,char ** argv){
 				intParam = 1;
 				alpha = 1;
 				kmin = 2;
-			}else if (nargs==5){
-				intParam = atoi(argv[4]);
+			}else if (nargs==4){
+				intParam = atoi(argv[3]);
 				validation(intParam);
 				alpha = 1;
 				validationKmin(intParam,kmin);
+			}else if (nargs==5){
+				intParam = atoi(argv[3]);
+				validation(intParam);
+				alpha = atof(argv[4]);
+				validationAlpha(alpha);
+				validationKmin(intParam,kmin);
+			}else if (nargs==6){
+				intParam = atoi(argv[3]);
+				validation(intParam);
+				alpha = atof(argv[4]);
+				validationAlpha(alpha);
+				kmin = atoi(argv[5]);
+				validationKmin(intParam,kmin);
 			}else if (nargs==7){
-				intParam = atoi(argv[4]);
+				intParam = atoi(argv[3]);
 				validation(intParam);
-				alpha = atof(argv[6]);
+				alpha = atof(argv[4]);
 				validationAlpha(alpha);
+				kmin = atoi(argv[5]);
 				validationKmin(intParam,kmin);
-			}else if ((nargs==9) || (nargs==11)){
-				intParam = atoi(argv[4]);
-				validation(intParam);
-				alpha = atof(argv[6]);
-				validationAlpha(alpha);
-				kmin = atoi(argv[8]);
-				validationKmin(intParam,kmin);
-				kmax = atoi(argv[10]);
+				kmax = atoi(argv[6]);
 			}else{
-				if(nargs != 11){
-					printf("\nbad input..\nusage:%s -tree nameFile [-p Parametre] [-alpha alphaValue] [-kmin kminValue] [-kmax kmaxValue]\n",argv[0]);
+				if(nargs > 7){
+					printf("\nbad input..\nusage:%s -tree nameFile [cluster_validity_index] [alpha] [kmin] [kmax]\n",argv[0]);
 					exit(1);
 				}
 			}
@@ -139,15 +144,15 @@ int main(int nargs,char ** argv){
 				tabIndices.clear();
 			}
 		}else if(strcmp("matrice",champs) == 0){
-			if(nargs != 11){
-				printf("\nbad input..\nusage:%s {-matrice} nameFile {-p} Parametre [-alpha alphaValue] [-kmin kminValue] [-kmax kmaxValue]\n",argv[0]);
+			if(nargs > 7){
+				printf("\nbad input..\nusage:%s {-matrice} nameFile [cluster_validity_index] [alpha] [kmin] [kmax]\n",argv[0]);
 				exit(1);
 			}
 			fstream fichier(argv[2]);
-			int intParam = atoi(argv[4]);
-			int alpha = atof(argv[6]);
-			int kmin = atoi(argv[8]);
-			int kmax = atoi(argv[10]);
+			int intParam = atoi(argv[3]);
+			int alpha = atof(argv[4]);
+			int kmin = atoi(argv[5]);
+			int kmax = atoi(argv[6]);
 			validation(intParam);
 			vector <string> mesTrees;
 			char ** cl2 = new char*[4];
@@ -297,7 +302,9 @@ void validation(int &intParam){
 }
 
 void validationAlpha(double &alpha){
-	if(alpha<0 || alpha>1){
+	if(alpha<0){
+		alpha=0;
+	}else if(alpha>1){
 		alpha=1;
 	}
 }

@@ -395,26 +395,6 @@ int main_kmeans(char **argv,vector <string> monTableau, double ** mat, double **
 	int nb_partition_OK = 0;
 	int max_possibility_parti_init = 0;
 
-	cout<<"MATRICE n_identique "<<endl;
-	for (int i=0;i<n;i++){
-		for (int j=0;j<n;j++){
-			cout<<n_identique[i][j]<<" ";
-		}
-		cout<<endl;
-	}
-	cout<<endl;
-
-	cout<<"MATRICE RF "<<endl;
-	for (int i=0;i<n;i++){
-		for (int j=0;j<n;j++){
-			cout<<mat[i][j]<<" ";
-		}
-		cout<<endl;
-	}
-	cout<<endl;
-
-
-
 	//initialisation des variables
 	for(int k=1;k<=kmax; k++){
 		nk[k]=0;
