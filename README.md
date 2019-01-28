@@ -1,4 +1,4 @@
-# CKMeansSuperTreeClustering
+# KMeansSuperTreeClustering
 A new fast method for clustering phylogenetic trees using K-means and inferring multiple supertrees
 
 # About
