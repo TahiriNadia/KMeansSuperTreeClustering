@@ -3,7 +3,7 @@ A new fast method for clustering phylogenetic trees using K-means and inferring 
 
 # About
 	=> =============================================================================================================================
-	=> Program   : KMeansSuperTreeClustering - 2018
+	=> Program   : KMeansSuperTreeClustering - 2019
 	=> Authors   : Nadia Tahiri and Vladimir Makarenkov (Université du Québec a Montréal)
 	=> This program clusters phylogenetic trees using the k-means partitioning algorithm.
 	=> These trees may have the same or different, but mutually overlapping, sets of leaves (the multiple supertree problem).
