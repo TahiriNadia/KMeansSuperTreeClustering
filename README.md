@@ -30,18 +30,18 @@ A new fast method for clustering phylogenetic trees using K-means and inferring 
 
 # Examples
 	Please execute the following command line:
-	=> For trees: ./KMSTC -tree input_file cluster_validity_index alpha Kmin Kmax
+	=> For trees: ./KMSTC -tree input_file cluster_validity_index α Kmin Kmax
 
 	=> input_file: the input file for the program
 	=> cluster_validity_index: the cluster validity index used in K-means (1 for Calinski-Harabasz and 2 for Ball-Hall)
-	=> \alpha: is the penalty parameter for species overlap in phylogenetic trees (must be between 0 and 1)
+	=> α: is the penalty parameter for species overlap in phylogenetic trees (must be between 0 and 1)
 	=> Kmin: is the minimum number of clusters in K-means. 
         	- For CH, Kmin>=2,
         	- For BH, Kmin>=1.
 	=> Kmax: the maximum number of clusters in K-means. 
         	- Kmax must be less or equal to N-1 (where N is the number of input trees).
 
-	Command line execution (input_file = data/all_trees_woese.txt, cluster_validity_index = CH, \\mathrm{A} = 1, Kmin = 2, Kmax = 10):
+	Command line execution (input_file = data/all_trees_woese.txt, cluster_validity_index = CH, α = 1, Kmin = 2, Kmax = 10):
 	./KMSTC -tree data/all_trees_woese.txt 1 1 2 10
 
 # Input
