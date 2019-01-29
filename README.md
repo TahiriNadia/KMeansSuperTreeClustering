@@ -13,8 +13,7 @@ A new fast method for clustering phylogenetic trees using K-means and inferring 
 	=> validity index adapted for tree clustering.
 	=> A supertree can then be inferred for each cluster of trees.
 	=> The Robinson and Foulds topological distance is used in the objective function of K-means.
-	=> The list of the program parameters is specified below.
-	=> =============================================================================================================================
+	=> The list of the program parameters is specified below. =============================================================================================================================
 
 # Installation
 	$ git clone https://github.com/TahiriNadia/KMeansSuperTreeClustering.git
@@ -30,11 +29,11 @@ A new fast method for clustering phylogenetic trees using K-means and inferring 
 
 # Examples
 	Please execute the following command line:
-	=> For trees: ./KMSTC -tree input_file cluster_validity_index alpha Kmin Kmax
+	=> For trees: ./KMSTC -tree input_file cluster_validity_index \alpha Kmin Kmax
 
 	=> input_file: the input file for the program
 	=> cluster_validity_index: the cluster validity index used in K-means (1 for Calinski-Harabasz and 2 for Ball-Hall)
-	=> alpha: is the penalty parameter for species overlap in phylogenetic trees (must be between 0 and 1)
+	=> \alpha: is the penalty parameter for species overlap in phylogenetic trees (must be between 0 and 1)
 	=> Kmin: is the minimum number of clusters in K-means. 
         	- For CH, Kmin>=2,
         	- For BH, Kmin>=1.
