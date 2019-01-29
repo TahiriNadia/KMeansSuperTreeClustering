@@ -14,7 +14,7 @@ A new fast method for clustering phylogenetic trees using K-means and inferring 
 	=> A supertree can then be inferred for each cluster of trees.
 	=> The Robinson and Foulds topological distance is used in the objective function of K-means.
 	=> The list of the program parameters is specified below.
-	=>=============================================================================================================================
+	=> =============================================================================================================================
 
 # Installation
 	$ git clone https://github.com/TahiriNadia/KMeansSuperTreeClustering.git
