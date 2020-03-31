@@ -286,7 +286,7 @@ void validation(int &intParam){
 	while(intParam<0 || intParam>2){
 		cout<<"Invalid Parameter. Help (CH using by default). Help"<<endl;
 		cout<<"Parameter1: CH "<<endl;
-		cout<<"Parameter 2: W "<<endl;
+		cout<<"Parameter 2: BH "<<endl;
 		cout<<"Parameter 0: Exit "<<endl;
 		intParam=1;
 	}
@@ -294,7 +294,7 @@ void validation(int &intParam){
 	if(intParam==0){
 		cout<<"Invalid Parameter. Help (CH using by default). Help"<<endl;
 		cout<<"Parameter1: CH (Calinski-Harabasz) "<<endl;
-		cout<<"Parameter 2:BH (Ball-Hall)"<<endl;		
+		cout<<"Parameter 2: BH (Ball-Hall)"<<endl;		
 		cout<<"Parameter 0: Exit "<<endl;
 		cout<<"====END OF PROGRAM!===="<<endl;
 		exit(0);
