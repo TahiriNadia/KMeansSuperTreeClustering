@@ -114,7 +114,7 @@ int main_kmeans(char **argv,vector <string> monTableau, double ** mat, double **
 	map<int,string>  mapIndicesTreesFinal;
 	vector <string> indicesTrees;
 	time_t tbegin2,tend2;
-    double texec2=0.;
+        double texec2=0.;
 
 	double W = 0.0;
 	double CH = -10000000000.0;
@@ -128,8 +128,8 @@ int main_kmeans(char **argv,vector <string> monTableau, double ** mat, double **
 	int W_group=0;
 	double FO_new = 10000000000.0;
 
-    // Start timer
-    tbegin2=time(NULL);				// get the current calendar time
+        // Start timer
+        tbegin2=time(NULL);				// get the current calendar time
 
 	int N = monTableau.size(); //quantity of initial tree
 	int i=0, j=0;		//Counters
@@ -140,11 +140,11 @@ int main_kmeans(char **argv,vector <string> monTableau, double ** mat, double **
 	int k1=0, k2=0;  //added declarations for variables
 	int hard_max_k=0; //--Setting the max k1
 
-    int random_number=100; //--Fixed random number
+        int random_number=100; //--Fixed random number
 	int istand=0;   //--0 No standardization
 	int iassign=2;  // 1 equal, 2 random
-    int iran=100;   //--Number of random position
-    int nran=100;  //--Number of Random start
+        int iran=100;   //--Number of random position
+        int nran=100;  //--Number of Random start
 
 	int nmax=N;    //--Maximum number of object -Parameter (nmax=10000,pmax=250,kmax=100)
 	int pmax=N;      //--Maximum data point (variable))
@@ -228,7 +228,7 @@ int main_kmeans(char **argv,vector <string> monTableau, double ** mat, double **
 	}
 
 	double D1=0,Dref=0,SSE=0,SSEref=0,SST=0;
-    double temp=0;
+        double temp=0;
 
 	int **listr;					//listr(kmax,nmax),
 	listr = new int*[kmax+1];
