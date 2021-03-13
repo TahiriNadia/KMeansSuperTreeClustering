@@ -3,9 +3,9 @@ A new fast method for clustering phylogenetic trees using K-means and inferring 
 
 # About
 	=> =============================================================================================================================
-	=> Program   : KMeansSuperTreeClustering - 2019
-	=> Authors   : Nadia Tahiri (Université du Québec à Montréal) and 
-	               Bernard Fichet (Laboratoire d’Informatique Fondamentale de Marseille).
+	=> Program   : KMeansSuperTreeClustering - 2021
+	=> Authors   : Nadia Tahiri and Vladimir Makarenkov (Université du Québec à Montréal)
+	               Bernard Fichet (Laboratoire d’Informatique Fondamentale de Marseille)
 	=> This program clusters phylogenetic trees using the k-means partitioning algorithm.
 	=> These trees may have the same or different, but mutually overlapping, sets of leaves (the multiple supertree problem).
 	=> Phylogenetic trees must be given in the Newick format (program input).
@@ -42,13 +42,14 @@ A new fast method for clustering phylogenetic trees using K-means and inferring 
 	=> Kmax: the maximum number of clusters in K-means. 
         	- Kmax must be less or equal to N-1 (where N is the number of input trees).
 
-	Command line execution (input_file = data/all_trees_woese.txt, cluster_validity_index = CH, α = 1, Kmin = 2, Kmax = 10):
-	./KMSTC -tree ../data/all_trees_woese.txt 1 1 2 10
+	Command line execution examples:
+         1) input_file = data/Covid-19_trees.txt, cluster_validity_index = CH, α = 0.1, Kmin = 3, Kmax = 8):
+	    ./KMSTC -tree ../data/Covid-19_trees.txt 1 0.1 3 8
+         2) input_file = data/all_trees_woese.txt, cluster_validity_index = CH, α = 1, Kmin = 2, Kmax = 10):
+	    ./KMSTC -tree ../data/all_trees_woese.txt 1 1 2 10
 
 # Input
-	=> The data set is located in the folder "data"
-	Phylogenetic gene trees in the Newick format from the paper by Woese et al. (2000, Microbiology and Molecular Biology Reviews)
-	(data file: data/all_trees_woese.txt)
+	=> The input data sets are located in the folder "data"
 
 # Output
 	=> See the folder "output"
