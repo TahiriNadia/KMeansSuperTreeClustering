@@ -2,8 +2,8 @@ all: CKMeansSuperTreeClustering.cpp
 	g++ CKMeansSuperTreeClustering.cpp -openmp -g -o KMSTC
 	chmod -R 777 * .
 	@echo '=> ============================================================================================================================='
-	@echo '=> Program   : KMeansSuperTreeClustering - 2018'
-	@echo '=> Authors   : Nadia Tahiri and Vladimir Makarenkov (Université du Québec a Montréal)'
+	@echo '=> Program   : KMeansSuperTreeClustering - 2021'
+	@echo '=> Authors   : Nadia Tahiri and Vladimir Makarenkov (Universite du Québec a Montreal)'
 	@echo '=> This program clusters phylogenetic trees using the k-means partitioning algorithm.'
 	@echo '=> These trees may have the same or different, but mutually overlapping, sets of leaves (the multiple supertree problem).'
 	@echo '=> Phylogenetic trees must be given in the Newick format (program input).'
@@ -21,15 +21,15 @@ all: CKMeansSuperTreeClustering.cpp
 	@echo ' '
 	@echo 'input_file: the input file for the program'
 	@echo 'cluster_validity_index: the cluster validity index used in K-means (1 for Calinski-Harabasz and 2 for Ball-Hall)'
-	@echo 'alpha: is the penalty parameter for species overlap in phylogenetic trees (must be between 0 and 1)'
-	@echo 'Kmin: is the minimum number of clusters in K-means.'	
+	@echo 'alpha: the penalty parameter for species overlap in phylogenetic trees (must be between 0 and 1)'
+	@echo 'Kmin: the minimum number of clusters in K-means.'	
 	@echo '            - For CH, Kmin>=2,'	
 	@echo '            - For BH, Kmin>=1.'	
 	@echo 'Kmax: the maximum number of clusters in K-means.'	
 	@echo '            - Kmax must be less or equal to N-1 (where N is the number of input trees).'	
 	@echo ''	
-	@echo '===> Command line execution (input_file = data/all_trees_woese.txt, cluster_validity_index = CH, alpha = 1, Kmin = 2, Kmax = 10):'
-	@echo '===> ./KMSTC -tree ../data/all_trees_woese.txt 1 1 2 10'
+	@echo '===> Command line execution example (input_file = data/Covid-19_trees.txt, cluster_validity_index = CH, alpha = 0.2, Kmin = 3, Kmax = 8):'
+	@echo '===> ./KMSTC -tree ../data/Covid-19_trees.txt 1 0.2 3 8'
 	
 install: CKMeansSuperTreeClustering.cpp
 	g++ CKMeansSuperTreeClustering.cpp -openmp -g -o KMSTC
@@ -42,15 +42,15 @@ help:
 	@echo ' '
 	@echo 'input_file: the input file for the program'
 	@echo 'cluster_validity_index: the cluster validity index used in K-means (1 for Calinski-Harabasz and 2 for Ball-Hall)'
-	@echo 'alpha: is the penalty parameter for species overlap in phylogenetic trees (must be between 0 and 1)'
-	@echo 'Kmin: is the minimum number of clusters in K-means.'	
+	@echo 'alpha: the penalty parameter for species overlap in phylogenetic trees (must be between 0 and 1)'
+	@echo 'Kmin: the minimum number of clusters in K-means.'	
 	@echo '            - For CH, Kmin>=2,'	
 	@echo '            - For BH, Kmin>=1.'	
 	@echo 'Kmax: the maximum number of clusters in K-means.'	
 	@echo '            - Kmax must be less or equal to N-1 (where N is the number of input trees).'	
 	@echo ''	
-	@echo '===> Command line execution (input_file = data/all_trees_woese.txt, cluster_validity_index = CH, alpha = 1, Kmin = 2, Kmax = 10):'
-	@echo '===> ./KMSTC -tree ../data/all_trees_woese.txt 1 1 2 10'
+	@echo '===> Command line execution example (input_file = data/Covid-19_trees.txt, cluster_validity_index = CH, alpha = 0.2, Kmin = 3, Kmax = 8):'
+	@echo '===> ./KMSTC -tree ../data/Covid-19_trees.txt 1 0.2 3 8'
 	
 clean: 
 	$(RM) *.o input_.txt
