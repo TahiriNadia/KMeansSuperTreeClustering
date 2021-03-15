@@ -144,7 +144,7 @@ int main_kmeans(char **argv,vector <string> monTableau, double ** mat, double **
 	int istand=0;   //--0 No standardization
 	int iassign=2;  // 1 equal, 2 random
         int iran=100;   //--Number of random position
-        int nran=100;  //--Number of Random start
+        int nran=100;  //--Number of Random start VM 
 
 	int nmax=N;    //--Maximum number of object -Parameter (nmax=10000,pmax=250,kmax=100)
 	int pmax=N;      //--Maximum data point (variable))
@@ -414,7 +414,7 @@ int main_kmeans(char **argv,vector <string> monTableau, double ** mat, double **
 			Assign(iran,n,nmax,k1,kmax,list,howmany,no,idebug,iassign,iseed, random_number);
 		}
 		// Big loop on number of groups, downwards from k1 to k2 (k1>=k2) - - - - - -
-		niter=100;
+		niter=100; //changed VM
 
 		//initialisation de Strouve de la liste realiser aleatoirement
 		for (kk=k1;kk>=k2;kk--){
@@ -823,7 +823,7 @@ void conv2sameRef(int *Strouve,int *Sref, int n)
 {
 	int k = 0;
 
-	cout<<"Number of trees in input: "<<n<<endl;
+	cout<<"Number of trees in the input file: "<<n<<endl;
 	cout<<"Partition found: "<<endl;
 	for(int i=0; i<n; i++){
 		cout<<Strouve[i]<<" <> ";
@@ -843,7 +843,7 @@ void conv2sameRef(int *Strouve,int *Sref, int n)
 		}
 	}
 
-	cout<<"Number of cluster (K) found: "<<k<<endl;
+	cout<<"Number of clusters (K) found: "<<k<<endl;
 
 	int *nk_trouve = new int [k];
 	int *nk_ref = new int [k];
