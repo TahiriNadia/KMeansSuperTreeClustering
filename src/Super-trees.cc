@@ -98,9 +98,11 @@ int main_consense(char **argv,vector<int> tabIndices, vector <string> mesTrees,i
 			n_identique[column][line]=distances[3];	
 			
 			// pour remplir la symétrique de la matrice RF sans réaliser de calcul (car matrice carrée symétrique)
-			Matrice_RF[column][line]=Matrice_RF[line][column];		
+			Matrice_RF[column][line]=Matrice_RF[line][column];
+            //printf("%lf ", Matrice_RF[line][column]); 			
 
 		}
+		//printf("\n"); 	
 	}
 	
 	double avg_RF = 0.0;
@@ -130,6 +132,14 @@ int main_consense(char **argv,vector<int> tabIndices, vector <string> mesTrees,i
 			}
 		}
 	}
+	
+	//printf("MATRICE RF\n"); 
+	//for(int line=0;line<mesTrees.size();line++){
+		//printf("\n");  
+		//for(int colonne=0;colonne<mesTrees.size();colonne++){
+			//printf("%lf(%lf)", Matrice_RF[line][colonne]*(2*n_identique[line][colonne]-6),2*n_identique[line][colonne]-6);         
+		//}
+	//}
 	
 	
 	//creation de la matrice de distances RF : mat
