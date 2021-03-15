@@ -1647,7 +1647,7 @@ char * itoa_(int val,char *buf,int radix){
 //===============================================================================================
 //
 //===============================================================================================
-int lectureNewick(string newick, long int * ARETE, double * LONGUEUR, char ** lesNoms, int *kt)
+int lectureNewick_old(string newick, long int * ARETE, double * LONGUEUR, char ** lesNoms, int *kt)
 {
 	int n;                                     
 	int cpt_x;
@@ -1695,7 +1695,7 @@ int lectureNewick(string newick, long int * ARETE, double * LONGUEUR, char ** le
 	if(i<=2*n-3)(*kt)=i;
 	else (*kt)=2*n-3;
 
-	if (i == 0) { printf("Incorrect Newick file format. Edge lengths must be indicated after a ':' characters."); exit(FAIL);}
+	if (i == 0) { printf("Incorrect Newick file format. Edge lengths must be indicated after a ':' characters."); exit(-1);}
 
 	if ((i>2*n-3) || (i<n)){
 		//printf("Unable to read your input data, please check it and try again...");
@@ -1721,8 +1721,8 @@ int lectureNewick(string newick, long int * ARETE, double * LONGUEUR, char ** le
 	cpt=0;
 
 	// verification des arit�s de l'arbre
-	if (j1!=j) { printf("Incorrect Newick file format. Number of right parentheses must be equal to number of left parentheses."); exit(FAIL);}
-	//else if (j!=n-2) { printf("Incorrect Newick file format. Only trees with vertices of degree 1 and 3 are allowed by T-REX."); fclose (data); exit(FAIL);}
+	if (j1!=j) { printf("Incorrect Newick file format. Number of right parentheses must be equal to number of left parentheses."); exit(-1);}
+	//else if (j!=n-2) { printf("Incorrect Newick file format. Only trees with vertices of degree 1 and 3 are allowed by T-REX."); fclose (data); exit(-1);}
 
 	k=0;
 
@@ -1733,7 +1733,7 @@ int lectureNewick(string newick, long int * ARETE, double * LONGUEUR, char ** le
 	}while(cpt < newick.size());   
 	
 	cpt=0;
-	//if (k!=(n-1)) { printf("Incorrect Newick file format. Number of objects must be equal to number of commas plus 1."); fclose (data); exit(FAIL);}
+	//if (k!=(n-1)) { printf("Incorrect Newick file format. Number of objects must be equal to number of commas plus 1."); fclose (data); exit(-1);}
 
 	a=0;
 
@@ -1744,8 +1744,8 @@ int lectureNewick(string newick, long int * ARETE, double * LONGUEUR, char ** le
 	}while(cpt < newick.size());    
 	cpt=0;
 
-	if (a==0) { printf("Incorrect Newick file format. Newick string must be followed by a ';' character."); exit(FAIL);}
-	else if (a>1) { printf("Incorrect Newick file format. Newick string must contain (in the end) only one ';' character."); exit(FAIL);}
+	if (a==0) { printf("Incorrect Newick file format. Newick string must be followed by a ';' character."); exit(-1);}
+	else if (a>1) { printf("Incorrect Newick file format. Newick string must contain (in the end) only one ';' character."); exit(-1);}
 
 	a=0;
 	do{
@@ -1756,7 +1756,7 @@ int lectureNewick(string newick, long int * ARETE, double * LONGUEUR, char ** le
 	
 	cpt=0;
 
-	if (symbol!='(') { printf("Incorrect Newick file format. Newick string must begin with a '(' character."); exit(FAIL);}  
+	if (symbol!='(') { printf("Incorrect Newick file format. Newick string must begin with a '(' character."); exit(-1);}  
 
 	a=0;
 	
@@ -1768,7 +1768,7 @@ int lectureNewick(string newick, long int * ARETE, double * LONGUEUR, char ** le
 
 	cpt=0;
 
-	if (a>0) { printf("Incorrect Newick file format. Newick string cannot contain \'%%\' character."); exit(FAIL);}
+	if (a>0) { printf("Incorrect Newick file format. Newick string cannot contain \'%%\' character."); exit(-1);}
 
 	do
 	{
@@ -1789,7 +1789,7 @@ int lectureNewick(string newick, long int * ARETE, double * LONGUEUR, char ** le
 				}while ((symbol!=':')&&(cpt < newick.size()));  
 			}
 			else cpt--;
-			if (a>50) { printf("Incorrect Newick file format. Names of objects must not exceed 50 characters.");  exit(FAIL);}   
+			if (a>50) { printf("Incorrect Newick file format. Names of objects must not exceed 50 characters.");  exit(-1);}   
 		}	
 	}while(cpt < newick.size());
 	cpt=0;
@@ -1805,7 +1805,7 @@ int lectureNewick(string newick, long int * ARETE, double * LONGUEUR, char ** le
 	}
 
 	if ((string == NULL)||(string1 == NULL)||(string2 == NULL)/*||(string3 == NULL)*/)
-	{ printf("Input data are too large or not a correct Newick file chosen"); exit(FAIL);}
+	{ printf("Input data are too large or not a correct Newick file chosen"); exit(-1);}
 
 	a=0;
 
@@ -1902,8 +1902,9 @@ int lectureNewick(string newick, long int * ARETE, double * LONGUEUR, char ** le
 				ARETE[aretePos++] = numero;
 				LONGUEUR[(aretePos-1)/ 2] = longueur;
 
-				if(boot_value == 1){
-					//printf("\n%d--%d : %lf (%s)",VertexNumber,numero,longueur,string4);
+				if(boot_value == 1)
+				{
+					// printf("\n%d--%d : %lf (%s)",VertexNumber,numero,longueur,string4);
 					boot_value=0;
 				}
 			}
@@ -1999,11 +2000,7 @@ int lectureNewick(string newick, long int * ARETE, double * LONGUEUR, char ** le
 	
 	//=== on teste si il y a un noeud de degre 2 et un noeud de degre 1
 
-	//printf("\n");
-	for(i=1;i<=2*n-3;i++){
-		//printf("\n%d-%d --> %lf",ARETE[2*i-1],ARETE[2*i-2],LONGUEUR[i-1]);
-	}
-    //printf("\n");
+
   
 	int * tableau = (int*)malloc(((2*n)+1)*sizeof(int));
 	int deg2=-1,deg1=-1;
@@ -2030,7 +2027,15 @@ int lectureNewick(string newick, long int * ARETE, double * LONGUEUR, char ** le
     if(pos_racine != -1){
         LONGUEUR[pos_racine-1] = 100;
     }
-
+	
+	
+	//printf("\n") Vladimir 24.02.2021 - activé 2 printf suivants;
+	//for(i=1;i<=2*n-3;i++){
+		//printf("\n n=%d  %d-%d --> %lf",n,ARETE[2*i-1],ARETE[2*i-2],LONGUEUR[i-1]);
+	//}
+    //printf("\n");
+	
+	
 	free(string);
 	free(string1);
 	free(string2);
@@ -2082,7 +2087,7 @@ int lectureNewick1(const char * newick, long int * ARETE, double * LONGUEUR, cha
 
 	cpt=0;
 
-	if (i == 0) { printf("Incorrect Newick file format. Edge lengths must be indicated after a ':' characters."); exit(FAIL);}
+	if (i == 0) { printf("Incorrect Newick file format. Edge lengths must be indicated after a ':' characters."); exit(-1);}
 
 	j=0;
 	do{ 
@@ -2101,7 +2106,7 @@ int lectureNewick1(const char * newick, long int * ARETE, double * LONGUEUR, cha
 	cpt=0;
 
 	// verification des arit�s de l'arbre
-	if (j1!=j) { printf("Incorrect Newick file format. Number of right parentheses must be equal to number of left parentheses."); exit(FAIL);}
+	if (j1!=j) { printf("Incorrect Newick file format. Number of right parentheses must be equal to number of left parentheses."); exit(-1);}
 
 	k=0;
 
@@ -2111,7 +2116,7 @@ int lectureNewick1(const char * newick, long int * ARETE, double * LONGUEUR, cha
 	}while(symbol != '\0');   
 	
 	cpt=0;
-	//if (k!=(n-1)) { printf("Incorrect Newick file format. Number of objects must be equal to number of commas plus 1."); fclose (data); exit(FAIL);}
+	//if (k!=(n-1)) { printf("Incorrect Newick file format. Number of objects must be equal to number of commas plus 1."); fclose (data); exit(-1);}
 
 	a=0;
 
@@ -2121,8 +2126,8 @@ int lectureNewick1(const char * newick, long int * ARETE, double * LONGUEUR, cha
 	}while(symbol != '\0');    
 	cpt=0;
 
-	if (a==0) { printf("Incorrect Newick file format. Newick string must be followed by a ';' character."); exit(FAIL);}
-	else if (a>1) { printf("Incorrect Newick file format. Newick string must contain (in the end) only one ';' character."); exit(FAIL);}
+	if (a==0) { printf("Incorrect Newick file format. Newick string must be followed by a ';' character."); exit(-1);}
+	else if (a>1) { printf("Incorrect Newick file format. Newick string must contain (in the end) only one ';' character."); exit(-1);}
 
 	a=0;
 	do{
@@ -2131,7 +2136,7 @@ int lectureNewick1(const char * newick, long int * ARETE, double * LONGUEUR, cha
 	
 	cpt=0;
 
-	if (symbol!='(') { printf("Incorrect Newick file format. Newick string must begin with a '(' character."); exit(FAIL);}  
+	if (symbol!='(') { printf("Incorrect Newick file format. Newick string must begin with a '(' character."); exit(-1);}  
 
 	a=0;
 	
@@ -2141,7 +2146,7 @@ int lectureNewick1(const char * newick, long int * ARETE, double * LONGUEUR, cha
 
 	cpt=0;
 
-	if (a>0) { printf("Incorrect Newick file format. Newick string cannot contain \'%%\' character."); exit(FAIL);}
+	if (a>0) { printf("Incorrect Newick file format. Newick string cannot contain \'%%\' character."); exit(-1);}
 
 	do{
 		symbol=newick[cpt++];
@@ -2156,7 +2161,7 @@ int lectureNewick1(const char * newick, long int * ARETE, double * LONGUEUR, cha
 				}while ((symbol!=':')&&(symbol!='\0'));  
 			}
 			else cpt--;
-			if (a>50) { printf("Incorrect Newick file format. Names of objects must not exceed 50 characters.");  exit(FAIL);}   
+			if (a>50) { printf("Incorrect Newick file format. Names of objects must not exceed 50 characters.");  exit(-1);}   
 		}	
 	}while(symbol != '\0');
 	cpt=0;
@@ -2166,7 +2171,7 @@ int lectureNewick1(const char * newick, long int * ARETE, double * LONGUEUR, cha
 	string1 = (char*)malloc((2000) * sizeof(char));
 
 	if ((string == NULL)||(string1 == NULL)||(string2 == NULL)/*||(string3 == NULL)*/)
-	{ printf("Input data are too large or not a correct Newick file chosen "); printf("version 2 ");exit(FAIL);}
+	{ printf("Input data are too large or not a correct Newick file chosen "); printf("version 2 ");exit(-1);}
 
 	a=0;
 
@@ -2615,4 +2620,498 @@ void RechercherBipartitionSansRacine(long int *ARETE,double ** DIST,double ** Ad
 	free(Adjacence);
 }
 
+//===============================================================================================
+//const char * newick
+//===============================================================================================
+//===============================================================================================
+int lectureNewick(string newick, long int * ARETE, double * LONGUEUR, char ** lesNoms, int *kt)
+{
+	int n;                                     
+	int cpt_x;
+	// Ce sous programme permet de lire un arbre au format newick et de le transcrire dans
+	// des vecteurs arete-longueur commencant à 1
+	// ATTENTION: les noms commencent à 0
+	// 7 octobre 2004
+	// Elmaestro
+	//printf("\nlecture Newick : ");
+	// TODO: Add your command handler code here
+	//int FAIL =-1;
+	int i,j,j1,k, a, a1, a2,a3, VertexNumber,numero;
+	char symbol, *string, *string1, *string2/* *string3,c ,**Et*/;
+	int taxaPos; // le nombre de taxas recupéré
+	int aretePos; // le nombre d'aretes recupéré
+	char symbolOld =' ';
+	int zz, xx,jj,ii;
+	double longueur;
+	char * tempString;
+	int cpt=0;
+	int na;
+	char *string4 = (char*) malloc(1000);
+	int temoin=0;
+	//char *newick = (char*)malloc(10000);
 
+	//long int *ARETE;
+	//double *LONGUEUR; 	
+	
+	/*FILE *data;
+	if ((data=fopen(fichier,"r"))==0) { printf("\n%s:Open Failed....",fichier); return -1; }    	
+	i=0;
+	while ((symbol=getc(data))!=EOF)
+	{
+		newick[i] = symbol;	
+		i++;
+	}  
+	newick[i] = '\0';
+	fclose(data);*/
+	//printf(" fclose(data)");
+	a=0;
+
+	//Correctness of the Newick format verification
+	i=0;
+	n = 0;
+
+	do
+	{
+		symbol = newick[cpt++];
+		if (symbol==':') i++;
+		if(symbol == ':' && symbolOld !=')' && temoin != 1) n++;
+		if(symbol >= '0' && symbol <= '9' && symbolOld==')') temoin=1;
+		if(symbol==':' && temoin==1) temoin=0;
+		symbolOld = symbol;
+	}  while(symbol != '\0');
+
+	cpt=0;
+	na=i;
+	if(i<=2*n-3)(*kt)=i;
+	else (*kt)=2*n-3;
+
+	if (i == 0) { printf("Incorrect Newick file format. Edge lengths must be indicated after a ':' characters."); return -1;}
+
+	if ((i>2*n-3) || (i<n)){
+		//printf("Unable to read your input data, please check it and try again...");
+		//exit(-1);
+	}
+
+	j=0;
+	do{ 
+	   symbol=newick[cpt++]; 
+	   if (symbol=='(') j++; 
+	}while(symbol != '\0');
+	
+	cpt=0;	
+	j1=0;
+	
+	do{
+		symbol=newick[cpt++];
+		if (symbol==')') j1++; 
+	}while(symbol != '\0');  
+	
+	cpt=0;
+
+	// verification des arités de l'arbre
+	if (j1!=j) { printf("Incorrect Newick file format. Number of right parentheses must be equal to number of left parentheses."); return -1;}
+	//else if (j!=n-2) { printf("Incorrect Newick file format. Only trees with vertices of degree 1 and 3 are allowed by T-REX."); fclose (data); return -1;}
+
+	k=0;
+
+	do{ 
+		symbol=newick[cpt++];
+		if (symbol==',') k++; 
+	}while(symbol != '\0');   
+	
+	cpt=0;
+	//if (k!=(n-1)) { printf("Incorrect Newick file format. Number of objects must be equal to number of commas plus 1."); fclose (data); return -1;}
+
+	a=0;
+
+	do{ 
+		symbol=newick[cpt++];
+		if (symbol==';') a++; 
+	}while(symbol != '\0');    
+	cpt=0;
+
+	if (a==0) { printf("Incorrect Newick file format. Newick string must be followed by a ';' character."); return -1;}
+	else if (a>1) { printf("Incorrect Newick file format. Newick string must contain (in the end) only one ';' character."); return -1;}
+
+	a=0;
+	do{
+		symbol=newick[cpt++];a++;
+	}while(symbol == ' '); 
+	
+	cpt=0;
+
+	if (symbol!='(') { printf("Incorrect Newick file format. Newick string must begin with a '(' character."); return -1;}  
+
+	a=0;
+	
+	do{ symbol=newick[cpt++];
+		if (symbol=='%') a++; 
+	}while(symbol != '\0');
+
+	cpt=0;
+
+	if (a>0) { printf("Incorrect Newick file format. Newick string cannot contain '%%' character."); return -1;}
+
+	do
+	{
+		symbol=newick[cpt++];
+		if ((symbol=='(')||(symbol==','))		
+		{ 
+			symbol=newick[cpt++]; a=0;
+			if ((symbol!='(')&&(symbol!=',')&&(symbol!=';')&&(symbol!=':'))		   
+			{ 
+				cpt--; 
+				do{
+					symbol=newick[cpt++];a++;
+				}while ((symbol!=':')&&(symbol!='\0'));  
+			}
+			else cpt--;
+			if (a>50) { printf("Incorrect Newick file format. Names of objects must not exceed 50 characters.");  return -1;}   
+		}	
+	}while(symbol != '\0');
+	cpt=0;
+
+	string = (char*)malloc((100000*n) * sizeof(char));
+	string2 = (char*)malloc((100000*n) * sizeof(char));
+	string1 = (char*)malloc((200000) * sizeof(char));
+
+	if ((string == NULL)||(string1 == NULL)||(string2 == NULL)/*||(string3 == NULL)*/)
+	{ printf("Input data are too large or not a correct Newick file chosen"); return -1;}
+      //printf("TEST1");
+	a=0;
+
+	do{		
+		symbol=newick[cpt++];
+		if ((symbol!=' ')&&(symbol!='\n')&&(symbol!='\t')) { string[a++]=symbol; } 
+	}while(symbol !='\0'); 
+
+	int boot_value;
+	int temoin3 = 0;
+	k=0; VertexNumber=n;
+	//a1 = 0;
+	//a2 = 0;
+	taxaPos =1;    // nous allons commencer à mettre les taxas à la position 1
+	aretePos = 1;
+	boot_value=0;
+	
+	while (string[0] == '(')   // traiter toute la chaine
+	{
+		a1 = 0;
+		a2 = 0;
+		while( string[a2] != ')')  // traiter la paire () la plus profonde
+		{
+			if(string[a2] == '(') a1 = a2;  // retrouver ;a parenthèse ouvrante
+			a2++;
+		}
+		
+
+		// a   => contient la longueur de la chaine
+		// a1  => contient le debut d'un noeud à traiter
+		// a2  => contient la fin d'un noeud à traiter
+		// a3  => délimite le noeud et sa longueur
+
+		zz = a1+1;
+		VertexNumber++;  // augmenter le nombre de noeuds
+		boot_value=0;
+		for ( ii = a1+1; ii <= a2; ii++)
+		{// decortiquer cette chaine
+
+			if (string[ii] == ':')
+			{
+				xx = 0;
+				a3 = ii+1;
+
+				if( string[zz] == '%')
+				{ // cela veut dire que c'est un  noeud que l'on traite
+
+					for ( jj = zz+1; jj < ii; jj++)
+					{
+						if(string[jj] == '|')
+							break;
+						string1[xx++] = string[jj]; 
+					}
+					temoin3=1;
+					string1[xx++] = '\0';
+					numero = atoi(string1);
+					
+					if(string[jj] == '|' ){
+						boot_value=1;
+						cpt_x=0;
+						jj++;
+						while(string[jj] != ':')
+							string4[cpt_x++] = string[jj++];
+						string4[cpt_x] = '\0';
+					}
+					
+				}
+				else
+				{
+					// on recupère le nom du taxa
+
+					for(jj = zz; jj < ii; jj++)
+					{
+						lesNoms[taxaPos-1][xx++] = string[jj];
+					}
+					numero = taxaPos;
+					lesNoms[taxaPos-1][xx] = '\0';  // mettre la fin de chaine
+					taxaPos++;  // augmenter le nombre de taxas pris
+				}
+				
+			}
+			else if(string[ii] == ','  || string[ii] == ')')
+			{
+				xx = 0;
+				zz = ii +1;   // faire pointer sur le prochain noeud
+				for ( jj = a3; jj < ii; jj++)
+				{
+					string1[xx++] = string[jj]; 
+				}
+				string1[xx++] = '\0';
+				longueur = atof(string1);
+				ARETE[aretePos++] = VertexNumber;
+				ARETE[aretePos++] = numero;
+				LONGUEUR[(aretePos-1)/ 2] = longueur;
+
+				if(boot_value == 1){
+					//printf("\n%d--%d : %lf (%s)",VertexNumber,numero,longueur,string4);
+					boot_value=0;
+				}
+			}
+
+		}
+
+		// fin for pour traiter noeud
+		//transcrire la nouvelle chaine
+		xx = 0;
+		for ( jj = 0; jj < (int)a1; jj++)
+		{string2[xx++] = string[jj];}
+
+		// ecrire le vertex
+		//	char buffer[50];
+		itoa_(VertexNumber,string1,10);
+		string2[xx++] = '%';   // indiquer que c'est un noeud
+		for( jj = 0; jj < (int) strlen(string1); jj++)
+		{string2[xx++] = string1[jj];}
+
+		int temoin=0;
+		
+		// transcrire la fin
+		for( jj = a2+1; jj <= a; jj++)  // il faut voir si c'est  <= a ou c < a
+		{
+			if(string[jj] != ':' && temoin==0){
+				string2[xx++] = '|';	
+			}
+			temoin = 1;
+			//if(temoin==1)
+				string2[xx++] = string[jj];
+			
+		}
+
+		// remplacer string par string2 en remplacant les pointeurs
+		
+		tempString = string;
+		string = string2;
+		string2 = tempString;
+		tempString = 0;
+		a = xx;  // mettre la longueur à jour 
+
+	} // fin du while pour traiter toute la string
+
+	/*for( jj=n;jj>0;jj--)
+		strcpy(lesNoms[jj],lesNoms[jj-1]);*/
+	
+	int root_existance = -1;
+	//for( jj=n;jj>0;jj--){
+	for(jj=0;jj<n;jj++){
+		//strcpy(lesNoms[jj],lesNoms[jj+1]);
+		if (strcmp(lesNoms[jj],"Root") == 0)
+			root_existance = jj;
+	}
+	/*printf("\nRoot_existance = %d",root_existance);
+	for( jj=0;jj<n;jj++){
+		printf("\n(%d) - %s",jj,lesNoms[jj]); 
+	}
+	*/
+	
+/*	
+	printf("\n\naretePos=%d\n",aretePos);
+	for(i=1;i<=2*(2*n-3);i++){
+		printf("\n%d",ARETE[i]);
+	}
+	
+	*/
+	ARETE[aretePos++] = 0;
+	ARETE[aretePos++] = 0;
+	
+	/*for(i=1;i<=2*(na);i++){
+		ARETE[i-1] = ARETE[i];
+	}*/
+	
+	i=0;
+	int cpt_branches=0;
+	do{
+		i++;cpt_branches++;
+	//	printf("\n%d : %d",cpt_branches,ARETE[i]);
+		ARETE[i-1] = ARETE[i];
+		i++;
+	//	printf("--%d",ARETE[i]);
+		ARETE[i-1] = ARETE[i];
+	}while(ARETE[i] != 0);
+	
+	for(i=1;i<=na;i++){
+		LONGUEUR[i-1] = LONGUEUR[i];
+	}
+	
+	//printf("\nNombre de branches dans l'arbre : %d",na);
+	/*
+	printf("\n\naretePos=%d,n=%d\n",aretePos,n);
+	for(i=1;i<=na;i++){
+		printf("\n%d : %d-%d",i,ARETE[2*i-2],ARETE[2*i-1]);
+	}*/
+	//== recherche des branches connexes a celle de la racine;
+	if( root_existance > 0){
+		int noeud_interne = -1;
+		for(i=1;i<=na;i++){
+			if(ARETE[2*i-1] == root_existance)
+				noeud_interne = ARETE[2*i-2];
+			if(ARETE[2*i-2] == root_existance)
+				noeud_interne = ARETE[2*i-1];
+		}
+		//printf("\n[%d,%d]",noeud_interne,root_existance);
+		for(i=1;i<=na;i++){
+			if((ARETE[2*i-1] != root_existance) && (noeud_interne == ARETE[2*i-2])){
+				LONGUEUR[i-1] = 50;
+		//		printf("\n[%d,%d]",noeud_interne,ARETE[2*i-1]);
+			}
+			if((ARETE[2*i-2] != root_existance) && (noeud_interne == ARETE[2*i-1])){
+				LONGUEUR[i-1] = 50;
+		//		printf("\n[%d,%d]",noeud_interne,ARETE[2*i-2]);
+			}
+		}
+		
+		
+	}
+	
+	
+	//=== on teste si il y a un noeud de degre 2 et un noeud de degre 1
+
+/*	printf("\nn=%d",n);
+	for(i=1;i<=na;i++){
+		printf("\n%d : %d-%d --> %lf",i,ARETE[2*i-1],ARETE[2*i-2],LONGUEUR[i-1]);
+	}
+    printf("\n");
+  */
+	int * tableau = (int*)malloc((2*n)*sizeof(int));
+	int deg2=-1,deg1=-1;
+	for(i=1;i<=2*n;i++)
+		tableau[i-1] = 0;
+	for(i=1;i<=na;i++){
+		tableau[ARETE[2*i-1]]++;
+		tableau[ARETE[2*i-2]]++;
+	}
+//	printf("\n");
+	i=n+1;
+	while(tableau[i] > 0){
+		//printf("\n%d-->%d",i,tableau[i]);
+		if(tableau[i] == 2) deg2 = i;
+		if(tableau[i] == 1) deg1 = i;
+		i++;
+	}  
+	//printf("\ndeg2=%d , deg1=%d",deg2,deg1);
+	int pos_racine=-1;
+	
+	for(i=1;i<=na;i++){
+		if(ARETE[2*i-1] == deg1){ ARETE[2*i-1] = deg2; pos_racine=i;  break;} 
+		if(ARETE[2*i-2] == deg1){ ARETE[2*i-2] = deg2; pos_racine=i;  break;} 
+	}
+    if(pos_racine != -1){
+        LONGUEUR[pos_racine-1] = 100;
+    }
+    else if(deg2 != -1){
+    	int pos1=-1,pos2=-1;
+    	for(i=1;i<=na;i++){
+			if((ARETE[2*i-1] == deg2 || ARETE[2*i-2] == deg2) && pos1==-1){ pos1=i;} 
+			else if((ARETE[2*i-1] == deg2 || ARETE[2*i-2] == deg2) && pos1 != -1){ pos2=i;} 
+		}
+		//printf("\npos1=%d, pos2=%d",pos1,pos2);
+		
+		//== modification de la branche pos1
+		if(ARETE[2*pos1-1] == deg2)
+			ARETE[2*pos1-1] = (ARETE[2*pos2-1] == deg2)?ARETE[2*pos2-2]:ARETE[2*pos2-1];
+		else
+			ARETE[2*pos1-2] = (ARETE[2*pos2-1] == deg2)?ARETE[2*pos2-2]:ARETE[2*pos2-1];
+			
+		//== suppression de la branche pos2
+		for(i=pos2;i<=na;i++){
+			LONGUEUR[i-1] = LONGUEUR[i];
+			ARETE[2*i-1] = ARETE[2*(i+1)-1];
+			ARETE[2*i-2] = ARETE[2*(i+1)-2];
+		}
+		na--;
+		
+    }
+    
+	/*printf("\nn=%d",n);
+	for(i=1;i<=na;i++){
+		printf("\n%d : %d-%d --> %lf",i,ARETE[2*i-1],ARETE[2*i-2],LONGUEUR[i-1]);
+	}
+    printf("\n");*/
+	(*kt) = 2*n-3 - (*kt);
+	
+	//printf ("\nkt=%d,na=%d,n=%d",*kt,na,n);
+	
+	
+	
+	
+	
+	
+	//printf("\nn=%d",n);
+	//for(i=1;i<=na;i++){
+		//printf("\n%d : %d-%d --> %lf",i,ARETE[2*i-1],ARETE[2*i-2],LONGUEUR[i-1]);
+	//}
+	
+	for(i=n;i>=1;i--){
+        strcpy(lesNoms[i],lesNoms[i-1]);
+		//printf("\n %s ",lesNoms[i]);
+	}
+	
+	return n;
+	//=== on teste si il y a un noeud de degre 2 et un noeud de degre 1
+
+	//int * tableau = (int*)malloc((2*n)*sizeof(int));
+	//int deg2=0,deg1=0;
+	for(i=n+1;i<=2*n;i++)
+		tableau[i-1] = 0;
+	for(i=1;i<=2*n-3-(*kt);i++){
+		tableau[ARETE[2*i-1]]++;
+		tableau[ARETE[2*i-2]]++;
+	}
+//	printf("\n");
+	i=n+1;
+	while(tableau[i] > 0){
+		//printf("\n%d-->%d",i,tableau[i]);
+		if(tableau[i] == 2) deg2 = i;
+		if(tableau[i] == 1) deg1 = i;
+		i++;
+	}
+	
+	for(i=1;i<=2*n-3-(*kt);i++){
+		if(ARETE[2*i-1] == deg1) ARETE[2*i-1] = deg2;
+		if(ARETE[2*i-2] == deg1) ARETE[2*i-2] = deg2;
+	}
+
+	
+
+
+
+	free(string);
+	free(string1);
+	free(string2);
+	//free(newick);
+	//free(string3);
+
+	
+
+	return n;
+
+}
