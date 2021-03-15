@@ -3679,6 +3679,3 @@ int formatResult(struct HGT *tabHGT,int nbHGT, struct HGT *outHGT,struct InputTr
 	
 	return nbHGTRet;
 }
-
-
-
