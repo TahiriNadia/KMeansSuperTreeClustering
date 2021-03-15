@@ -36,7 +36,7 @@ using namespace std;
 #include "fonctions.cpp"
 
 #define binaireSpecies 0
-#define binaireGene    1
+#define binaireGene    0 //VM bilo 1
 int compteur=0;
 
 void traiterSignal(int sig){
@@ -91,6 +91,7 @@ void main_hgt(string tree1, string tree2, double *distances){
 //==============================================================================
 	initInputTree(&SpeciesTree);
 	initInputTree(&GeneTree);
+	//printf("TEST");
 	nb_same_espece = readInputFile(tree1,tree2, param.input,&SpeciesTree,&GeneTree,param.errorFile);
 
 	if(nb_same_espece<0) {
@@ -103,10 +104,22 @@ void main_hgt(string tree1, string tree2, double *distances){
 	if(readInput(SPECIE,param.input,&SpeciesTreeReduce) == -1){ printf("\nError in species tree\n"); exit(-1);}
 	if(readInput(GENE,param.input,&GeneTreeReduce) == -1){ printf("\nError in gene tree\n"); getchar(); exit(-1);}
 
+
+//== lecture des matrices ou chaines newick en entree VM
 	TrierMatrices(GeneTreeReduce.Input,GeneTreeReduce.SpeciesName,SpeciesTreeReduce.SpeciesName,SpeciesTreeReduce.size);
 
-	NJ(SpeciesTreeReduce.Input,SpeciesTreeReduce.ADD,SpeciesTreeReduce.size);
-	NJ(GeneTreeReduce.Input,GeneTreeReduce.ADD,GeneTreeReduce.size);
+     //TrierMatrices(SpeciesTreeReduce.ADD,GeneTreeReduce.SpeciesName,SpeciesTreeReduce.SpeciesName,SpeciesTreeReduce.size);
+     //TrierMatrices(GeneTreeReduce.ADD,GeneTreeReduce.SpeciesName,SpeciesTreeReduce.SpeciesName,SpeciesTreeReduce.size);
+    //printf ("\nSpeciesTreeSize =%d, GeneTreeSize=%d\n",SpeciesTreeReduce.size, GeneTreeReduce.size);
+    for(i=1;i<=SpeciesTreeReduce.size;i++){
+		for(j=1;j<=SpeciesTreeReduce.size;j++){		
+			SpeciesTreeReduce.ADD[i][j] = SpeciesTreeReduce.Input[i][j];
+			GeneTreeReduce.ADD[i][j] = GeneTreeReduce.Input[i][j];
+		}
+	}
+
+	//NJ(SpeciesTreeReduce.Input,SpeciesTreeReduce.ADD,SpeciesTreeReduce.size);
+	//NJ(GeneTreeReduce.Input,GeneTreeReduce.ADD,GeneTreeReduce.size);
 
 	//== construction des differentes repr�sentation des arbres (adjacence,aretes,longueur,degre)
 	CreateSubStructures(&SpeciesTreeReduce,1,binaireSpecies);
@@ -115,6 +128,7 @@ void main_hgt(string tree1, string tree2, double *distances){
 	InitCriteria(&aCrit,SpeciesTreeReduce.size);
 	computeCriteria(SpeciesTreeReduce.ADD,GeneTreeReduce.ADD,SpeciesTreeReduce.size,&aCrit,SpeciesTreeReduce.LONGUEUR,SpeciesTreeReduce.ARETE,GeneTreeReduce.LONGUEUR,GeneTreeReduce.ARETE);
 	distances[0]=aCrit.RF;
+	//printf("RF=%lf\n",distances[0]);
 	if(SpeciesTree.size-nb_same_espece>GeneTree.size-nb_same_espece){
 		min_diff = GeneTree.size-nb_same_espece;
 	}else{
